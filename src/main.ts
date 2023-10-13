@@ -6,11 +6,11 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <div>
     <div class="card">
-        <button id="counter" type="button"></button>
+        <button id="counter" type="button">Licky 🍭</button>
     </div>
 </div>
 `;
-const gameName = "Clicky Pop";
+const gameName = "Licky Pop";
 
 document.title = gameName;
 
