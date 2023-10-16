@@ -1,13 +1,35 @@
-export function setupCounter(element: HTMLButtonElement) {
-  let counter = 0;
-  let lastTime = performance.now();
+export let counter = 0;
+
+export function setupCounter(
+  element: HTMLButtonElement,
+  counterCallback: (counter: number) => void,
+) {
+  let lastTime = 0;
+  let isStarted = false;
 
   const updateCounter = (currentTime: number) => {
-    const increment = (currentTime - lastTime) / 1000;
+    if (!isStarted) {
+      isStarted = true;
+      lastTime = currentTime;
+    }
+    const elapsed = currentTime - lastTime;
+    const increment = elapsed / 1000;
     counter += increment;
-    element.innerHTML = `Licking 🍭 ${counter}x`;
     lastTime = currentTime;
-    requestAnimationFrame(updateCounter);
+    counterCallback(counter);
+    if (isStarted) {
+      requestAnimationFrame(updateCounter);
+    }
   };
-  element.addEventListener("click", () => requestAnimationFrame(updateCounter));
+
+  element.addEventListener("click", () => {
+    if (!isStarted) {
+      isStarted = false;
+      requestAnimationFrame(updateCounter);
+    }
+  });
+}
+
+export function decreaseCounter(cost: number) {
+  counter -= cost;
 }
