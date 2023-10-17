@@ -8,7 +8,7 @@ app.innerHTML = `
 <div>
     <div class="card">
         <button id="counterButton" type="button">Licky 🍭</button>
-        <button id="purchaseButton" type="button">Purchase 1 🍭 (5x lick)</button>
+        <button id="purchaseButton" type="button">Purchase 1 🍭 (10x lick)</button>
     </div>
 </div>
 `;
@@ -20,7 +20,7 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
-const item1 = 5;
+const item1 = 10;
 
 setupCounter(
   document.querySelector<HTMLButtonElement>("#counterButton")!,
