@@ -1,3 +1,4 @@
+import { currentGrowthRate } from "./main.ts";
 export let counter = 0;
 
 export function setupCounter(
@@ -13,7 +14,7 @@ export function setupCounter(
       lastTime = currentTime;
     }
     const elapsed = currentTime - lastTime;
-    const increment = elapsed / 1000;
+    let increment = (elapsed / 1000) + currentGrowthRate;
     counter += increment;
     lastTime = currentTime;
     counterCallback(counter);
