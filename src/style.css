@@ -32,8 +32,10 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 8em;
+  line-height: 3;
+  color: #a8d1d1;
+  margin-top: -3in;
 }
 
 #app {
@@ -41,6 +43,21 @@ h1 {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+.main-button {
+  border-radius: 50%;
+  border: 2px solid transparent;
+  color: #a5a9f9;
+  padding: 1em 1.2em;
+  font-size: 1.5em;
+  font-weight: 400;
+  background-color: #ffdcf4;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.main-button:hover {
+  transform: scale(1.2);
 }
 
 button {
@@ -55,7 +72,8 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #ff789c;
+  color: #f8b9ca;
 }
 button:focus,
 button:focus-visible {
@@ -64,13 +82,13 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #213c47;
+    background-color: #dfebeb;
   }
   a:hover {
-    color: #747bff;
+    color: #c1bbdd;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #a5a9f9;
   }
 }

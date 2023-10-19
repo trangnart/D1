@@ -5,12 +5,13 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 
 app.innerHTML = `
 <div>
+    <h1>Licky Pop</h1>
     <div class="card">
-        <button id="counterButton" type="button">Licky Pop</button>
-        <button id="purchaseButton1" type="button">Purchase 1 🍭 (cost 10x lick). Provides 0.1 units/sec</button>
-        <button id="purchaseButton2" type="button">Purchase 1 🍬 (cost 100x lick). Provides 2.0 units/sec</button>
-        <button id="purchaseButton3" type="button">Purchase 1 🍡 (cost 1000x lick). Provides 50 units/sec</button>
-        <button id="countDisplay" type="button">The current growth rate: 0
+        <button id="counterButton" type="button" class="main-button">🍭</button>
+        <button id="purchaseButton1" type="button">Purchase 🍭 (cost 10 Licks). +0.1 units/sec</button>
+        <button id="purchaseButton2" type="button">Purchase 🍬 (cost 100 Licks). +2.0 units/sec</button>
+        <button id="purchaseButton3" type="button">Purchase 🍡 (cost 1000 Licks). +50 units/sec</button>
+        <button id="countDisplay" type="button">The current growth rate: 0 /
                                                 🍭 count: 0
                                                 🍬 count: 0
                                                 🍡 count: 0</button>
@@ -23,7 +24,6 @@ document.title = gameName;
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
-app.append(header);
 
 let lollipopCount = 0;
 let candyCount = 0;
@@ -45,12 +45,12 @@ setupCounter(
   (counter) => {
     const counterButton = document.querySelector<HTMLButtonElement>("#counterButton")!;
 
-    counterButton.innerHTML = `Licking pop ${counter.toFixed(2)}x`;
+    counterButton.innerHTML = `Licking pop ${counter.toFixed(2)} Licks`;
 
     const countDisplay = document.querySelector<HTMLButtonElement>("#countDisplay")!;
     countDisplay.innerHTML = `The current growth rate: ${currentGrowthRate.toFixed(
       2,
-    )}
+    )} /
             🍭 count: ${lollipopCount}
             🍬 count: ${candyCount}
             🍡 count: ${dangoCount}`;
@@ -75,7 +75,7 @@ const purchaseUpgrade = (index: number) => {
     currentGrowthRate += growthRates[0];
     lollipopCost = newPopCost;
     const purchaseButton1 = document.querySelector<HTMLButtonElement>("#purchaseButton1")!;
-    purchaseButton1.innerHTML = `Purchase 1 🍭 (cost ${newPopCost.toFixed(2)}x lick). Provides 0.1 units/sec`;
+    purchaseButton1.innerHTML = `Purchase 🍭 (cost ${newPopCost.toFixed(2)} licks). Provides 0.1 units/sec`;
   }
   if (index === 1 && counter >= candyCost) {
     newCandyCost = candyCost * Math.pow(1.15, candyCount+1);
@@ -84,7 +84,7 @@ const purchaseUpgrade = (index: number) => {
     currentGrowthRate += growthRates[1];
     candyCost = newCandyCost;
     const purchaseButton2 = document.querySelector<HTMLButtonElement>("#purchaseButton2")!;
-    purchaseButton2.innerHTML = `Purchase 1 🍬 (cost ${newCandyCost.toFixed(2)}x lick). Provides 2.0 units/sec`;
+    purchaseButton2.innerHTML = `Purchase 🍬 (cost ${newCandyCost.toFixed(2)} licks). Provides 2.0 units/sec`;
   }
   if (index === 2 && counter >= dangoCost) {
     newDangoCost = dangoCost * Math.pow(1.15, dangoCount+1);
@@ -93,7 +93,7 @@ const purchaseUpgrade = (index: number) => {
     currentGrowthRate += growthRates[2];
     dangoCost = newDangoCost;
     const purchaseButton3 = document.querySelector<HTMLButtonElement>("#purchaseButton3")!;
-    purchaseButton3.innerHTML = `Purchase 1 🍡 (cost ${newDangoCost.toFixed(2)}x lick). Provides 50 units/sec`;
+    purchaseButton3.innerHTML = `Purchase 🍡 (cost ${newDangoCost.toFixed(2)} licks). Provides 50 units/sec`;
   }
   const counterButton = document.querySelector<HTMLButtonElement>("#counterButton")!;
   counterButton.innerHTML = `Licking Pop ${counter.toFixed(2)}x`;
