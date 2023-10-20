@@ -32,9 +32,9 @@ interface Item {
 }
 
 const availableItems: Item[] = [
-  { name: "lollipop", cost: 2, rate: 0.1 },
-  { name: "candy", cost: 5, rate: 2 },
-  { name: "dango", cost: 7, rate: 50 },
+  { name: "lollipop", cost: 10, rate: 0.1 },
+  { name: "candy", cost: 100, rate: 2 },
+  { name: "dango", cost: 1000, rate: 50 },
 ];
 
 const counts = availableItems.map(() => 0);
