@@ -25,40 +25,44 @@ document.title = gameName;
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 
-let lollipopCount = 0;
-let candyCount = 0;
-let dangoCount = 0;
+interface Item {
+  name: string;
+  cost: number;
+  rate: number;
+}
 
-let lollipopCost = 10;
-let candyCost = 100;
-let dangoCost = 1000;
+const availableItems: Item[] = [
+  { name: "lollipop", cost: 2, rate: 0.1 },
+  { name: "candy", cost: 5, rate: 2 },
+  { name: "dango", cost: 7, rate: 50 },
+];
 
-let newPopCost = 0;
-let newCandyCost = 0;
-let newDangoCost = 0;
-
+const counts = availableItems.map(() => 0);
+let newCosts = availableItems.map((item) => item.cost);
+const growthRates = availableItems.map((item) => item.rate);
 export let currentGrowthRate = 0;
-const growthRates = [0.1, 2.0, 50];
 
 setupCounter(
   document.querySelector<HTMLButtonElement>("#counterButton")!,
   (counter) => {
-    const counterButton = document.querySelector<HTMLButtonElement>("#counterButton")!;
+    const counterButton =
+      document.querySelector<HTMLButtonElement>("#counterButton")!;
 
     counterButton.innerHTML = `Licking pop ${counter.toFixed(2)} Licks`;
 
-    const countDisplay = document.querySelector<HTMLButtonElement>("#countDisplay")!;
+    const countDisplay =
+      document.querySelector<HTMLButtonElement>("#countDisplay")!;
     countDisplay.innerHTML = `The current growth rate: ${currentGrowthRate.toFixed(
       2,
-    )} /
-            🍭 count: ${lollipopCount}
-            🍬 count: ${candyCount}
-            🍡 count: ${dangoCount}`;
+    )} / ${availableItems.map(
+      (item, index) => `
+            ${item.name} count: ${counts[index]}`,
+    )}`;
 
-    if (counter >= lollipopCost) purchaseButtons[0].disabled = false;
-    if (counter >= candyCost) purchaseButtons[1].disabled = false;
-    if (counter >= dangoCost) purchaseButtons[2].disabled = false;
-  }
+    availableItems.forEach((item, index) => {
+      if (counter >= newCosts[index]) purchaseButtons[index].disabled = false;
+    });
+  },
 );
 
 const purchaseButtons = [
@@ -68,44 +72,24 @@ const purchaseButtons = [
 ];
 
 const purchaseUpgrade = (index: number) => {
-  if (index === 0 && counter >= lollipopCost) {
-    newPopCost = lollipopCost * Math.pow(1.15, lollipopCount+1);
-    decreaseCounter(lollipopCost);
-    lollipopCount++;
-    currentGrowthRate += growthRates[0];
-    lollipopCost = newPopCost;
-    const purchaseButton1 = document.querySelector<HTMLButtonElement>("#purchaseButton1")!;
-    purchaseButton1.innerHTML = `Purchase 🍭 (cost ${newPopCost.toFixed(2)} licks). Provides 0.1 units/sec`;
-  }
-  if (index === 1 && counter >= candyCost) {
-    newCandyCost = candyCost * Math.pow(1.15, candyCount+1);
-    decreaseCounter(candyCost);
-    candyCount++;
-    currentGrowthRate += growthRates[1];
-    candyCost = newCandyCost;
-    const purchaseButton2 = document.querySelector<HTMLButtonElement>("#purchaseButton2")!;
-    purchaseButton2.innerHTML = `Purchase 🍬 (cost ${newCandyCost.toFixed(2)} licks). Provides 2.0 units/sec`;
-  }
-  if (index === 2 && counter >= dangoCost) {
-    newDangoCost = dangoCost * Math.pow(1.15, dangoCount+1);
-    decreaseCounter(dangoCost);
-    dangoCount++;
-    currentGrowthRate += growthRates[2];
-    dangoCost = newDangoCost;
-    const purchaseButton3 = document.querySelector<HTMLButtonElement>("#purchaseButton3")!;
-    purchaseButton3.innerHTML = `Purchase 🍡 (cost ${newDangoCost.toFixed(2)} licks). Provides 50 units/sec`;
+  if (counter >= newCosts[index]) {
+    const selectedItem = availableItems[index];
+    newCosts[index] = selectedItem.cost * Math.pow(1.15, counts[index] + 1);
+    decreaseCounter(selectedItem.cost);
+    counts[index]++;
+    currentGrowthRate += selectedItem.rate;
+    const purchaseButton = purchaseButtons[index];
+    purchaseButton.innerHTML = `Purchase ${selectedItem.name} (cost ${newCosts[
+      index
+    ].toFixed(2)} Licks). +${selectedItem.rate} units/sec`;
   }
   const counterButton = document.querySelector<HTMLButtonElement>("#counterButton")!;
   counterButton.innerHTML = `Licking Pop ${counter.toFixed(2)}x`;
 
-  if (counter >= lollipopCost) purchaseButtons[0].disabled = false;
-  else purchaseButtons[0].disabled = true;
-
-  if (counter >= candyCost) purchaseButtons[1].disabled = false;
-  else purchaseButtons[1].disabled = true;
-
-  if (counter >= dangoCost) purchaseButtons[2].disabled = false;
-  else purchaseButtons[2].disabled = true;
+  availableItems.forEach((item, i) => {
+    if (counter >= newCosts[i]) purchaseButtons[i].disabled = false;
+    else purchaseButtons[i].disabled = true;
+  });
 };
 
 purchaseButtons.forEach((button, index) => {
