@@ -39,7 +39,6 @@ const availableItems: Item[] = [
 
 const counts = availableItems.map(() => 0);
 let newCosts = availableItems.map((item) => item.cost);
-const growthRates = availableItems.map((item) => item.rate);
 export let currentGrowthRate = 0;
 
 setupCounter(
@@ -60,8 +59,9 @@ setupCounter(
     )}`;
 
     availableItems.forEach((item, index) => {
-      if (counter >= newCosts[index]) purchaseButtons[index].disabled = false;
+      if (counter >= item.cost) purchaseButtons[index].disabled = false;
     });
+
   },
 );
 
@@ -87,7 +87,7 @@ const purchaseUpgrade = (index: number) => {
   counterButton.innerHTML = `Licking Pop ${counter.toFixed(2)}x`;
 
   availableItems.forEach((item, i) => {
-    if (counter >= newCosts[i]) purchaseButtons[i].disabled = false;
+    if (counter >= item.cost) purchaseButtons[i].disabled = false;
     else purchaseButtons[i].disabled = true;
   });
 };
