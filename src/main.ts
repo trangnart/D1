@@ -37,7 +37,7 @@ app.innerHTML = `
             (item, index) =>
               `<button id="purchaseButton${index + 1}" type="button">Purchase ${
                 item.name
-              } (cost ${item.cost} Licks). +${item.rate} units/sec</button>`,
+              } (cost ${item.cost} Licks). +${item.rate} units/sec. Description: ${item.description}</button>`,
           )
           .join("")}
         <button id="countDisplay" type="button">The current growth rate: 0 /
@@ -93,7 +93,7 @@ const purchaseUpgrade = (index: number) => {
     const purchaseButton = purchaseButtons[index];
     purchaseButton.innerHTML = `Purchase ${selectedItem.name} (cost ${newCosts[
       index
-    ].toFixed(2)} Licks). +${selectedItem.rate} units/sec`;
+    ].toFixed(2)} Licks). +${selectedItem.rate} units/sec. Description: ${selectedItem.description}`;
   }
   counterButton.innerHTML = `👅 Pop ${counter.toFixed(2)}x`;
 
